@@ -5,8 +5,10 @@ import urllib2
 import string
 import math
 import nltk
-from nltk import word_tokenize
 from nltk.corpus import stopwords
+from nltk import word_tokenize
+nltk.data.path.append("/nltk_data")
+
 
 class sentence_engine:
     """Sentence Engine class definition
@@ -16,8 +18,6 @@ class sentence_engine:
     Takes URL as argument and uses html2text to obtain text version of the html
     """
     def __init__(self, url):
-        nltk.download('stopwords')
-        nltk.download('punkt')
         self.html = self.get_html(url)
         self.text = ""
         self.get_text()
@@ -37,6 +37,8 @@ class sentence_engine:
         text_maker = html2text.HTML2Text()
         text_maker.ignore_links = True
         text_maker.bypass_tables = True
+        text_maker.ignore_images = True
+        text_maker.ignore_emphasis = True
         text_maker.escape_snob = 1
         self.text = text_maker.handle(self.html)
 
@@ -49,7 +51,6 @@ class sentence_engine:
         encoded_html = html.decode('utf-8')
         decoded_html = encoded_html.encode('ascii','ignore')
         return decoded_html
-
     
     def filter(self, lines):
         stop_words = set(stopwords.words('english'))
@@ -60,7 +61,7 @@ class sentence_engine:
         bag=set()
         #Get bag of words
         for line in lines:
-            if len(line)>5:
+            if len(line)>5 and '*' not in line and '|' not in line:
                 tokens= word_tokenize(line)
                 tokens = [w.lower() for w in tokens]
                 tokens = [word for word in tokens if word.isalpha()]
@@ -71,29 +72,22 @@ class sentence_engine:
             if toks.count(token)>5:
                 token_map[token] = toks.count(token)
         token_map = sorted(token_map.iteritems(),key=lambda kv:kv[1],reverse=True)
-        if len(token_map)>20:
-            token_map = token_map[:20]
-        for (key, value) in token_map:
+        
+        for (key, value) in token_map[:20]:
             bag.add(key)
-        #return bag
-
 
         for line in sentences:
             temp = []
             for word in bag:
                 temp.append(sentences[line].count(word))
             matrix.append(temp)
-        return sentences, matrix
+        return sentences.keys(), matrix, self.html
         
-        
-        
-        
-
 
     """Method that iterates over text version of html, prunes and returns a list of sentences
     """
     def get_sentences(self):
-        lines = self.text.encode('ascii','ignore').split("\n")
+        lines = self.text.encode('ascii','ignore').replace("\n", " ").split(".")
         return self.filter(lines)
         
     

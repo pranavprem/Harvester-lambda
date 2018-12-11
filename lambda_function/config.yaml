@@ -1,4 +1,4 @@
-region: us-east-1
+region: us-west-1
 
 function_name: harvester
 handler: service.handler
@@ -17,15 +17,14 @@ aws_access_key_id:
 aws_secret_access_key:
 
 # dist_directory: dist
-# timeout: 15
+timeout: 35
 # memory_size: 512
 # concurrency: 500
 #
 
 # Experimental Environment variables
 environment_variables:
-    env_1: foo
-    env_2: baz
+    NLTK_DATA: ./nltk_data
 
 # If `tags` is uncommented then tags will be set at creation or update
 # time.  During an update all other tags will be removed except the tags
@@ -36,4 +35,4 @@ environment_variables:
 
 # Build options
 build:
-  source_directories: lib # a comma delimited list of directories in your project root that contains source to package.
+  source_directories: lib, nltk_data # a comma delimited list of directories in your project root that contains source to package.
