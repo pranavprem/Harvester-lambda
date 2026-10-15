@@ -3,7 +3,7 @@ region: us-west-1
 function_name: harvester
 handler: service.handler
 description: Harvests any URL on the internet
-runtime: python2.7
+runtime: python3.14
 # role: lambda_basic_execution
 
 # S3 upload requires appropriate role with s3:PutObject permission
@@ -11,8 +11,8 @@ runtime: python2.7
 # bucket_name: 'example-bucket'
 # s3_key_prefix: 'path/to/file/'
 
-# if access key and secret are left blank, boto will use the credentials
-# defined in the [default] section of ~/.aws/credentials.
+# Leave these blank. The deploy path uses the AWS credential chain
+# (environment variables, ~/.aws/credentials, or a role). Never commit keys.
 aws_access_key_id:
 aws_secret_access_key:
 
@@ -33,6 +33,7 @@ environment_variables:
 #    tag_1: foo
 #    tag_2: bar
 
-# Build options
+# Build options. scripts/package_lambda.sh is the supported packager.
+# source_directories is the list the archived python-lambda CLI would copy.
 build:
-  source_directories: lib, nltk_data # a comma delimited list of directories in your project root that contains source to package.
+  source_directories: nltk_data

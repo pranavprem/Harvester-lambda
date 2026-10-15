@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "harvester-lambda"
+version = "0.2.0"
+description = "AWS Lambda function that extracts important sentences from a web page."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "html2text==2025.4.15",
+    "nltk==3.10.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.1.1",
+    "ruff==0.17.0",
+]
+
+[tool.setuptools]
+packages = []
+
+[tool.pytest.ini_options]
+pythonpath = ["lambda_function"]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+src = ["lambda_function", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Unfinished experiments still name symbols they never define.
+"lambda_function/CNN.py" = ["F821", "F841"]
+"lambda_function/regressor.py" = ["F821", "F841"]

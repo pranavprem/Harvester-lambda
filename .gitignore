@@ -1,2 +1,21 @@
-/lambda_function/dist/*
-/MLenv/*
+# Virtual environments and deploy bundles
+MLenv/
+.venv/
+venv/
+lambda_function/dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Secrets and local environment
+.env
+.env.*
+*.pem
+
+# OS and editor
+.DS_Store
