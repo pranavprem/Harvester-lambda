@@ -44,7 +44,7 @@ Three other rankers are in the tree and are not called. `CNN.py` is a partial MN
 | Language | Python 3.12 or newer. Local checks run on 3.12. |
 | Lambda runtime | `python3.14` (`python3.12` and `python3.13` are also supported on Lambda) |
 | HTML to text | `html2text` 2025.4.15 (GPL-3.0-or-later) |
-| Tokenizing and stopwords | `nltk` 3.10.3 (Apache-2.0) |
+| Tokenizing and stopwords | `nltk` 3.10.4 (Apache-2.0) |
 | Tests and lint | pytest 9.1.1, Ruff 0.17.0 |
 | Region / function | `us-west-1`, function name `harvester`, handler `service.handler`, timeout 35 seconds |
 
