@@ -1,4 +1,4 @@
 # Runtime dependencies for the Lambda zip. Keep in sync with
 # [project].dependencies in pyproject.toml.
 html2text==2025.4.15
-nltk==3.10.3
+nltk==3.10.4
